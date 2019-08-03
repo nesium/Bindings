@@ -34,7 +34,7 @@ public struct Binding<T> {
 
   public func twoWayBind<O>(
     _ source: O
-  ) -> Disposable where O: ObserverType & ObservableType, O.E == T {
+  ) -> Disposable where O: ObserverType & ObservableType, O.Element == T {
     return self.target.bnd_bidiSubscribe(
       source,
       sourceToTarget: { $0 },
@@ -56,8 +56,8 @@ public struct Binding<T> {
 
   public func twoWayBind<O>(
     _ source: O,
-    sourceToTarget: (Observable<O.E>) -> Observable<T>,
-    targetToSource: (Observable<T>) -> Observable<O.E>
+    sourceToTarget: (Observable<O.Element>) -> Observable<T>,
+    targetToSource: (Observable<T>) -> Observable<O.Element>
   ) -> Disposable where O: ObserverType & ObservableType {
     return self.target.bnd_bidiSubscribe(
       source,
@@ -81,7 +81,7 @@ public struct Binding<T> {
     )
   }
 
-  public func bind<O>(_ source: O) -> Disposable where O: ObservableType, O.E == T {
+  public func bind<O>(_ source: O) -> Disposable where O: ObservableType, O.Element == T {
     return source
       .observeOn(MainScheduler.instance)
       .subscribe(onNext: { value in

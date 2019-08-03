@@ -200,7 +200,7 @@ class BindingsTests: XCTestCase {
     _ = target
       .take(3)
       .toArray()
-      .subscribe(onNext: { result in
+      .subscribe(onSuccess: { result in
         XCTAssertEqual(result, [0, 1, 2])
         exp.fulfill()
       })
